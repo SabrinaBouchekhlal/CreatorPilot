@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-navy: #0E1633;
+    --color-navy-dark: #080D21;
+    --color-navy-secondary: #1B2650;
+    --color-navy-card: #151E40;
+    --color-coral: #FF5A6E;
+    --color-coral-hover: #E8465A;
+    --color-mint: #7BE0C3;
+    --color-mint-dark: #32B391;
+    --color-bg-light: #F2F4FA;
+    --color-surface-soft: #E9ECF7;
+    --color-surface-white: #FFFFFF;
+  }
+
+  html {
+    font-family: 'Tajawal', 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  html[dir="ltr"] {
+    font-family: 'Plus Jakarta Sans', 'Tajawal', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  body {
+    background-color: var(--color-bg-light);
+    color: var(--color-navy);
+  }
+}
+
+/* Custom utility classes */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Scrollbar polish */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(27, 38, 80, 0.2);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(27, 38, 80, 0.4);
+}

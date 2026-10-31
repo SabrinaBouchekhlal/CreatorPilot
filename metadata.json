@@ -1,0 +1,6 @@
+{
+  "name": "CreatorPilot",
+  "description": "Evidence-backed content strategy and decision engine for Arabic, French, and English creators. Discover verified trends, plan 48-hour and 7-day calendars, analyze Instagram performance, and generate brand-aligned scripts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
