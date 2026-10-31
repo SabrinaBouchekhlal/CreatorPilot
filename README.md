@@ -2,7 +2,7 @@
 
 ## 1. Project overview
 
-**CreatorPilot — Multilingual AI content strategy for Arabic-speaking creators.**
+**CreatorPilot — Multilingual AI content strategy for creators.**
 
 CreatorPilot helps creators and small businesses turn a brand profile and approved content pillars into practical, localized content ideas, scripts, bios, strategies, and short-term content plans.
 
