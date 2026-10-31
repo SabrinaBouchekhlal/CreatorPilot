@@ -101,7 +101,7 @@ function sendGeminiFailure(res: Response, failure: GeminiFailure) {
       : failure.kind === 'provider_configuration' || failure.kind === 'not_configured'
       ? 'Gemini is not available. Check the server-side API key and Google AI Studio project configuration.'
       : failure.kind === 'invalid_response'
-      ? 'Gemini did not return valid content. No content was generated; please try again later.'
+      ? 'Gemini returned content that did not satisfy CreatorPilot validation. No content was generated; please try again.'
       : 'Gemini is temporarily unavailable. No content was generated; please try again later.',
     retryAt: failure.retryAt,
   };

@@ -1,5 +1,7 @@
 import React from 'react';
 import { useApp } from '../../context/AppContext';
+import heroWorkspaceImage from '../../assets/images/hero_creator_workspace_1793123902712.jpg';
+import trendRadarImage from '../../assets/images/trend_radar_visual_1793123903532.jpg';
 import { 
   Sparkles, 
   Compass, 
@@ -82,7 +84,7 @@ export const LandingPage: React.FC = () => {
             <div className="lg:col-span-5">
               <div className="relative rounded-2xl overflow-hidden border border-[#1B2650] shadow-2xl bg-[#151E40]">
                 <img
-                  src="/src/assets/images/hero_creator_workspace_1793123902712.jpg"
+                  src={heroWorkspaceImage}
                   alt="Creator Studio Workspace"
                   className="w-full h-80 sm:h-96 object-cover"
                   referrerPolicy="no-referrer"
@@ -283,7 +285,7 @@ export const LandingPage: React.FC = () => {
             <div className="lg:col-span-6">
               <div className="rounded-2xl overflow-hidden border border-[#1B2650] shadow-2xl">
                 <img
-                  src="/src/assets/images/trend_radar_visual_1793123903532.jpg"
+                  src={trendRadarImage}
                   alt="Trend Radar Screen"
                   className="w-full h-80 sm:h-96 object-cover"
                   referrerPolicy="no-referrer"
