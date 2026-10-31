@@ -60,6 +60,7 @@ interface AppContextType {
   openGenerator: (tool?: string) => void;
   closeGenerator: () => void;
   editingItem: CalendarItem | null;
+  isEditorOpen: boolean;
   openEditor: (item: CalendarItem | null) => void;
   closeEditor: () => void;
   // Quick navigation helpers
@@ -84,6 +85,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [isGeneratorOpen, setIsGeneratorOpen] = useState(false);
   const [generatorInitialTool, setGeneratorInitialTool] = useState<string | undefined>('ideas');
   const [editingItem, setEditingItem] = useState<CalendarItem | null>(null);
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
 
   // Genuine Auth & In-Memory Session Token (No localStorage user identity source of truth)
   const [user, setUser] = useState<User | null>(null);
@@ -580,8 +582,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const closeGenerator = () => setIsGeneratorOpen(false);
 
-  const openEditor = (item: CalendarItem | null) => setEditingItem(item);
-  const closeEditor = () => setEditingItem(null);
+  const openEditor = (item: CalendarItem | null) => {
+    setEditingItem(item);
+    setIsEditorOpen(true);
+  };
+  const closeEditor = () => {
+    setEditingItem(null);
+    setIsEditorOpen(false);
+  };
 
   const toggleSidebar = () => setIsSidebarOpen(prev => !prev);
 
@@ -626,6 +634,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         openGenerator,
         closeGenerator,
         editingItem,
+        isEditorOpen,
         openEditor,
         closeEditor,
         isSidebarOpen,

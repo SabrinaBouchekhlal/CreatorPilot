@@ -4,7 +4,7 @@ import { CalendarItem, ContentStatus } from '../../types';
 import { X, Check, Copy, Save, BookmarkPlus, ShieldAlert, Sparkles, Loader2 } from 'lucide-react';
 
 export const ScriptEditorModal: React.FC = () => {
-  const { editingItem, closeEditor, saveCalendarItem, saveLibraryItem, brand, t, showToast, language } = useApp();
+  const { editingItem, isEditorOpen, closeEditor, saveCalendarItem, saveLibraryItem, brand, t, showToast, language } = useApp();
 
   const [formData, setFormData] = useState<Partial<CalendarItem>>({
     title: '',
@@ -47,7 +47,7 @@ export const ScriptEditorModal: React.FC = () => {
   }, [editingItem, brand]);
 
   // Modal must not render when no item is being edited
-  if (!editingItem) return null;
+  if (!isEditorOpen) return null;
 
   const handleAutoGenerateScript = async () => {
     setIsGeneratingScript(true);
