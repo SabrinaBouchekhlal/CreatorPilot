@@ -795,7 +795,8 @@ export const dbService = {
       return signals.length > 0 ? signals : demoTrendSignals;
     } catch (error) {
       console.error('Failed to get trend signals:', error);
-      throw new Error('Database query failed while fetching trend signals', { cause: error });
+      console.warn('Using explicitly labeled demo trend signals because the trend feed is unavailable.');
+      return demoTrendSignals;
     }
   }
 };
