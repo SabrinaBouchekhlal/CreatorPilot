@@ -34,6 +34,81 @@ export interface BrandProfileRecord {
   updatedAt?: Date;
 }
 
+const demoTrendSignals: (typeof trendSignals.$inferSelect)[] = [
+  {
+    id: 'trend-en-1',
+    title: 'Practical workshops and focused consulting',
+    source: 'Demo signal',
+    sourceUrl: 'https://trends.google.com/trends/',
+    category: 'Digital Products',
+    velocity: 0,
+    freshnessDays: 0,
+    observedAt: null,
+    region: null,
+    language: 'en',
+    evidenceType: 'demo',
+    decayStatus: 'Sustained Shift',
+    confidence: 'Demo only',
+    isVerified: false,
+    nicheFitScore: 0,
+    summary: 'Demo example only. No dated, source-verified trend measurement is available.'
+  },
+  {
+    id: 'trend-en-2',
+    title: 'Structured educational videos and carousels',
+    source: 'Demo signal',
+    sourceUrl: 'https://trends.google.com/trends/',
+    category: 'Instagram Format',
+    velocity: 0,
+    freshnessDays: 0,
+    observedAt: null,
+    region: null,
+    language: 'en',
+    evidenceType: 'demo',
+    decayStatus: 'Sustained Shift',
+    confidence: 'Demo only',
+    isVerified: false,
+    nicheFitScore: 0,
+    summary: 'Demo example only. Platform-performance claims have not been independently verified.'
+  },
+  {
+    id: 'trend-en-3',
+    title: 'Transparent content and audience trust',
+    source: 'Demo signal',
+    sourceUrl: 'https://trends.google.com/trends/',
+    category: 'Audience Psychology',
+    velocity: 0,
+    freshnessDays: 0,
+    observedAt: null,
+    region: null,
+    language: 'en',
+    evidenceType: 'demo',
+    decayStatus: 'Sustained Shift',
+    confidence: 'Demo only',
+    isVerified: false,
+    nicheFitScore: 0,
+    summary: 'Demo example only. This is a strategic suggestion, not a verified trend.'
+  },
+  {
+    id: 'trend-en-4',
+    title: 'AI as a research assistant',
+    source: 'Demo signal',
+    sourceUrl: 'https://trends.google.com/trends/',
+    category: 'AI Workflow',
+    velocity: 0,
+    freshnessDays: 0,
+    observedAt: null,
+    region: 'Global',
+    language: 'en',
+    evidenceType: 'demo',
+    decayStatus: 'Sustained Shift',
+    confidence: 'Demo only',
+    isVerified: false,
+    nicheFitScore: 0,
+    summary: 'Demo example only. No verified current trend data is attached to this suggestion.'
+  }
+];
+
 export type ContentLanguage = 'ar_standard' | 'ar_algerian' | 'ar_darija' | 'fr' | 'en';
 
 export interface UserRecord {
@@ -716,7 +791,8 @@ export const dbService = {
   // ----------------- Trend Signals -----------------
   async getTrendSignals(): Promise<(typeof trendSignals.$inferSelect)[]> {
     try {
-      return await db.select().from(trendSignals);
+      const signals = await db.select().from(trendSignals);
+      return signals.length > 0 ? signals : demoTrendSignals;
     } catch (error) {
       console.error('Failed to get trend signals:', error);
       throw new Error('Database query failed while fetching trend signals', { cause: error });
