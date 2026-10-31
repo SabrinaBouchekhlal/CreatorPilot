@@ -34,7 +34,6 @@ export const IntegrationsView: React.FC = () => {
     : 'الجزائر، المغرب، مصر، السعودية، الإمارات، وفرنسا';
 
   const sourcesLabel = isEn ? 'Curated Publications:' : isFr ? 'Sources accréditées :' : 'المصادر المعتمدة:';
-  const autoSyncedBtn = isEn ? 'Auto-Synchronized' : isFr ? 'Synchronisé automatiquement' : 'مفعل تلقائياً';
   const monitoredBtn = isEn ? 'Active & Curated' : isFr ? 'Actif et surveillé' : 'مفعل ومراقب';
 
   return (
@@ -119,8 +118,8 @@ export const IntegrationsView: React.FC = () => {
               <div className="w-10 h-10 rounded-xl bg-[#0E1633] text-[#7BE0C3] flex items-center justify-center font-bold text-sm">
                 GT
               </div>
-              <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
-                {t.integrations.statusConnected}
+            <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200">
+              {t.integrations.statusUnconfigured}
               </span>
             </div>
 
@@ -131,6 +130,13 @@ export const IntegrationsView: React.FC = () => {
             <p className="text-xs text-slate-600 leading-relaxed">
               {t.integrations.googleTrendsDesc}
             </p>
+            <p className="text-xs font-semibold text-amber-700">
+              {isEn
+                ? 'Not connected yet. Trend Radar will remain empty until a real trend data source is configured.'
+                : isFr
+                ? 'Pas encore connecté. Le Radar restera vide jusqu’à la configuration d’une vraie source de tendances.'
+                : 'غير متصل بعد. سيبقى رادار التريندات فارغاً حتى يتم إعداد مصدر حقيقي للبيانات.'}
+            </p>
 
             <div className="p-3 bg-slate-50 rounded-lg space-y-1 text-[11px] text-slate-600 font-sans">
               <span className="block font-bold text-slate-700">{regionsLabel}</span>
@@ -140,10 +146,10 @@ export const IntegrationsView: React.FC = () => {
 
           <div className="pt-2">
             <button
-              onClick={() => showToast(isEn ? 'Google Trends feed is active in Trend Radar' : isFr ? 'Le flux Google Trends est actif dans le Radar' : 'خلاصة Google Trends مفعلة وتتحدث دورياً في رادار التريندات', 'info')}
-              className="w-full py-2.5 text-xs font-bold rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer"
+              onClick={() => showToast(isEn ? 'Google Trends is not connected yet' : isFr ? 'Google Trends n’est pas encore connecté' : 'Google Trends غير متصل بعد', 'info')}
+              className="w-full py-2.5 text-xs font-bold rounded-xl bg-slate-100 text-slate-500 transition-colors cursor-pointer"
             >
-              {autoSyncedBtn}
+              {isEn ? 'Not connected yet' : isFr ? 'Pas encore connecté' : 'غير متصل بعد'}
             </button>
           </div>
         </div>
