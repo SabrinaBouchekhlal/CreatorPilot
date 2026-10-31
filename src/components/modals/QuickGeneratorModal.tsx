@@ -186,14 +186,8 @@ export const QuickGeneratorModal: React.FC = () => {
           `Strategic role: ${pillar.strategicRole || ''}`,
           `Allocation: ${pillar.percentage}%`,
           `Objective: ${pillar.description || pillar.objective || ''}`,
-          `Audience problems: ${(Array.isArray(pillar.audienceProblems) ? pillar.audienceProblems : []).join(' | ')}`,
-          `Content themes: ${(Array.isArray(pillar.contentThemes) ? pillar.contentThemes : []).join(' | ')}`,
-          `Example topics: ${(Array.isArray(pillar.exampleTopics) ? pillar.exampleTopics : []).join(' | ')}`,
-          `Recommended formats: ${(Array.isArray(pillar.recommendedFormats) ? pillar.recommendedFormats : []).join(' | ')}`,
           `Offer connection: ${pillar.offerConnection || ''}`,
-          `CTA types: ${(Array.isArray(pillar.ctaTypes) ? pillar.ctaTypes : []).join(' | ')}`,
-          `Rationale: ${pillar.whyItMatters || ''}`,
-        ].filter(Boolean).join('\n')
+        ].filter(Boolean).join(' ').slice(0, 500)
       }))
     });
   };
