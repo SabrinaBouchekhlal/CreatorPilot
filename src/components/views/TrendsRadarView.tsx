@@ -146,11 +146,21 @@ export const TrendsRadarView: React.FC = () => {
 
   const filteredTrends = trends.filter(trend => {
     if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase();
+      const q = searchQuery.trim().toLocaleLowerCase();
       const localizedContent = localizeTrendContent(trend);
-      const match = localizedContent.title.toLowerCase().includes(q) ||
-                    localizedContent.summary.toLowerCase().includes(q) ||
-                    trend.category.toLowerCase().includes(q);
+      const searchableText = [
+        localizedContent.title,
+        localizedContent.summary,
+        trend.title,
+        trend.summary,
+        trend.category,
+        trend.source,
+        trend.sourceUrl,
+        trend.decayStatus,
+        trend.confidence,
+        trend.id,
+      ].join(' ').toLocaleLowerCase();
+      const match = searchableText.includes(q);
       if (!match) return false;
     }
     const hasVerifiedEvidence = isVerifiedRecentEvidence(trend);
@@ -255,6 +265,31 @@ export const TrendsRadarView: React.FC = () => {
       </div>
 
       {/* Signal Cards Feed */}
+      {filteredTrends.length === 0 ? (
+        <div className="bg-white rounded-2xl border border-slate-200 p-8 text-center">
+          <Compass className="w-8 h-8 mx-auto text-slate-300 mb-3" />
+          <h3 className="text-sm font-bold text-[#0E1633]">
+            {isEnglish ? 'No matching trend signals' : isFrench ? 'Aucun signal correspondant' : 'لا توجد إشارات مطابقة'}
+          </h3>
+          <p className="text-xs text-slate-500 mt-1">
+            {isEnglish
+              ? 'Try another keyword or clear the search and source filter.'
+              : isFrench
+              ? 'Essayez un autre mot-clé ou réinitialisez la recherche et le filtre.'
+              : 'جرّب كلمة أخرى أو امسح البحث وفلتر المصدر.'}
+          </p>
+          <button
+            type="button"
+            onClick={() => {
+              setSearchQuery('');
+              setFilterSource('all');
+            }}
+            className="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-[#0E1633] bg-[#7BE0C3] hover:bg-[#68d1b3] rounded-lg transition-colors"
+          >
+            {isEnglish ? 'Clear filters' : isFrench ? 'Effacer les filtres' : 'مسح الفلاتر'}
+          </button>
+        </div>
+      ) : (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {filteredTrends.map((trend) => {
           const verifiedEvidence = isVerifiedRecentEvidence(trend);
@@ -342,6 +377,7 @@ export const TrendsRadarView: React.FC = () => {
           );
         })}
       </div>
+      )}
     </div>
   );
 };
