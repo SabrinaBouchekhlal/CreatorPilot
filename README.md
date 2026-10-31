@@ -1,91 +1,130 @@
 # CreatorPilot
 
-## Submission information
+## 1. Project overview
 
-### 1. Project name and one-line summary
+**CreatorPilot — Multilingual AI content strategy for Arabic-speaking creators.**
 
-**CreatorPilot** — A multilingual AI workspace that helps Arabic-speaking creators turn their brand strategy into practical content ideas and plans.
+CreatorPilot helps creators and small businesses turn a brand profile and approved content pillars into practical, localized content ideas, scripts, bios, strategies, and short-term content plans.
 
-### 2. Project description
+## 2. About the project
 
-Creators and small businesses often know their niche but struggle to turn that knowledge into consistent, audience-specific content. Generic AI tools can produce attractive text while ignoring the creator's audience, offer, voice, language, and approved strategy.
+Creators often know their niche but struggle to turn their audience, offer, and expertise into consistent content. Generic AI tools can produce polished text while ignoring brand constraints, approved strategy, language, and dialect.
 
-CreatorPilot is a workspace for Arabic-speaking creators and small businesses. Users create a brand profile, define their audience and offer, approve strategic content pillars, and use Gemini to generate localized ideas, scripts, bios, strategies, and 48-hour or seven-day plans. The application validates generated content before showing or saving it, rejects unsupported claims, preserves user ownership, and makes provider failures explicit instead of silently inventing local results.
+CreatorPilot addresses this problem with a structured workspace. Users define their brand, target audience, voice, offer, constraints, and strategic pillars. Gemini then generates content using that saved context. The application validates the response before displaying or saving it, rejects unsupported claims, and reports provider failures instead of silently returning invented substitute content.
 
-The current demo requires Supabase authentication, a PostgreSQL database, and a server-side Gemini API key. These credentials are not included in the repository; the demo video should show the complete workflow if a public deployment is unavailable.
+The primary users are Arabic-speaking creators, educators, consultants, and small businesses. English and French workflows are also supported.
 
-### 3. Live demo link
+### Submission details
 
-**Demo URL:** `[ADD PUBLIC DEPLOYMENT URL]`
+- **Live demo:** `[Add public Render URL]`
+- **Public repository:** https://github.com/SabrinaBouchekhlal/CreatorPilot
+- **Demo video:** `[Add an unlisted YouTube or Google Drive URL]`
+- **Team members and roles:** `[Add each contributor's full name and one honest line describing their contribution]`
 
-The deployed URL must be tested in a private browser window before submission. If deployment is unavailable, submit the public demo video and state that the product requires configured Supabase and Gemini credentials.
+The live URL and demo video must be tested in a private browser window and accessible without requesting permission. If the deployment requires configured Supabase and Gemini credentials, the demo video should show the complete workflow.
 
-### 4. Code repository
+## 3. Features
 
-**Public repository:** `[ADD PUBLIC GITHUB URL]`
+Users can:
 
-This repository contains the application source, database schema, migrations, tests, and local setup instructions. Never commit `.env.local`, API keys, database passwords, or Supabase service-role credentials.
+- Create an account with Supabase email/password authentication.
+- Create and edit a brand profile.
+- Define and approve strategic content pillars.
+- Generate three content ideas with scripts or format-specific structures.
+- Generate Instagram bio options.
+- Generate a four-pillar content strategy.
+- Generate 48-hour and seven-day suggested content plans.
+- Work in English, French, Modern Standard Arabic, or Algerian Darija.
+- Review and save validated drafts.
+- Manage user-owned content, decisions, calendar items, and library items.
+- Receive clear errors when Gemini is unavailable or returns invalid content.
 
-### 5. Demo video
+Google sign-in, Instagram OAuth, account analytics, and live trend-source verification are not currently enabled.
 
-**Video URL:** `[ADD UNLISTED YOUTUBE OR GOOGLE DRIVE URL]`
+## 4. How it works
 
-Recommended two-to-four-minute structure:
+1. The user signs up with email and password.
+2. The user creates a brand profile with the niche, audience, voice, offer, language, dialect, and constraints.
+3. The user generates, reviews, and approves strategic pillars.
+4. The user selects a workflow such as ideas, bio, strategy, or a content plan.
+5. The server loads the authenticated user's brand context and approved pillars.
+6. Gemini returns structured JSON in the requested language.
+7. CreatorPilot validates required fields, format structure, dates, language, duplicate content, approved pillars, and unsupported claims.
+8. Only validated content is returned or saved as a draft/proposal.
 
-1. Show the working workspace immediately.
-2. Explain the creator problem in under 30 seconds.
-3. Create or open a brand profile.
-4. Approve strategic pillars.
-5. Generate one localized content result with Gemini.
-6. Show validation, editing, and saving behavior.
-7. Briefly show the 48-hour or seven-day plan.
-8. End with the product impact and next steps.
+## 5. Tech stack
 
-The link must be viewable without requesting access.
+| Layer | Technologies |
+|---|---|
+| Frontend | React, TypeScript, Vite, Tailwind CSS, Lucide React |
+| Backend | Node.js, Express, TypeScript, `tsx` |
+| Database | Supabase PostgreSQL |
+| ORM | Drizzle ORM |
+| Authentication | Supabase Auth with email/password |
+| AI integration | Google Gemini API through `@google/genai` |
+| Validation and testing | TypeScript compiler and focused generation tests |
+| Deployment | Render or another Node-compatible host |
 
-### 6. Team members and roles
+## 6. Architecture
 
-Replace the entries below with every contributor's full name and actual contribution:
+```text
+React/Vite frontend
+        |
+        | Supabase Auth session + authenticated API requests
+        v
+Express/Node API
+        |
+        +--> Supabase PostgreSQL through Drizzle
+        |       - brand profiles
+        |       - approved pillars
+        |       - user-owned content
+        |
+        +--> Gemini API
+                - structured generation
+                - server-side API key
+                - bounded correction attempt
+```
 
-- **[Full name]** — Product direction, UX, and frontend workflow.
-- **[Full name]** — Supabase authentication, PostgreSQL schema, ownership, and persistence.
-- **[Full name]** — Gemini generation prompts, validation, localization, and testing.
-- **[Full name]** — Deployment, demo video, and submission materials.
+The frontend never receives the Gemini API key or database connection string. The API derives the current user from the verified Supabase access token, loads authorized brand data, calls Gemini, validates the response, and then persists only accepted drafts or proposals. Regeneration does not automatically overwrite approved or manually edited content.
 
-Remove roles that do not apply. Do not claim work a person did not perform.
+## 7. Supported languages
 
-### 7. Tech stack
+CreatorPilot supports:
 
-- **Frontend:** React, TypeScript, Vite, Tailwind CSS, Lucide React
-- **Backend:** Node.js, Express, TypeScript, `tsx`
-- **Database and authentication:** Supabase Auth, Supabase PostgreSQL, Drizzle ORM
-- **AI:** Google Gemini API through `@google/genai`
-- **Validation and testing:** TypeScript compiler, focused generation tests
-- **Deployment target:** Render or another Node-compatible host
+- English
+- French
+- Modern Standard Arabic (MSA)
+- Algerian Darija
 
-### 8. What happens next
+Language and dialect are normalized on the server and passed into each generation workflow. User-supplied brand terms are preserved where appropriate.
 
-Over the next three months, we would deploy a reliable public version, add verified trend-source ingestion, implement official Instagram/Meta OAuth and analytics, improve timezone-aware scheduling, add brand-knowledge retrieval, and test the workflows with creators across Arabic, French, and English markets. We would measure usefulness through completed content plans, edits required per generated draft, and repeat usage rather than unsupported performance claims.
+## 8. Project status and limitations
 
-## What works today
+### Implemented
 
-- Email/password authentication through Supabase; Google sign-in is intentionally not included.
-- Brand profile and approved strategic-pillar workflow.
-- Gemini-only generation for ideas, bios, strategies, and content plans.
-- English, French, Modern Standard Arabic, and Algerian Darija output handling.
-- Validation for missing profile data, approved pillars, duplicate content, unsupported claims, malformed responses, requested language, and plan dates.
-- 48-hour and seven-day suggested content plans.
-- User-scoped persistence through the authenticated server identity.
-- Clear errors when Gemini is unavailable; no local substitute content is silently returned.
+- Email/password authentication
+- User-owned PostgreSQL persistence
+- Brand profile and approved-pillar workflow
+- Gemini-only generation
+- Ideas, bios, strategies, 48-hour plans, and seven-day plans
+- Output validation and bounded correction
+- Unsupported-claim detection
+- Date and timezone-aware suggested plan dates
+- Localized UI and generation prompts
+- Explicit provider and validation errors
 
-## Known limitations
+### Planned or unavailable
 
-- A real verified trend-source integration is not implemented; generated content is marked evergreen when verified evidence is unavailable.
-- Instagram OAuth and account analytics are not implemented.
-- Generated plans contain suggested dates, not scheduled publication timestamps.
-- The application requires configured Supabase and Gemini credentials.
+- Google OAuth
+- Official Instagram/Meta OAuth
+- Instagram account analytics
+- Verified live trend-source ingestion
+- Brand-knowledge RAG
+- Scheduled publishing and account-specific optimal posting times
 
-## Local setup
+When verified trend evidence is unavailable, the application generates evergreen ideas and does not claim that external sources or platform analytics were checked.
+
+## 9. Getting started
 
 ### Requirements
 
@@ -93,7 +132,7 @@ Over the next three months, we would deploy a reliable public version, add verif
 - A Supabase project
 - A Gemini API key
 
-### Environment
+### Environment variables
 
 Copy `.env.example` to `.env.local` and set:
 
@@ -105,20 +144,20 @@ GEMINI_API_KEY="your-gemini-api-key"
 GEMINI_MODEL="gemini-3.5-flash-lite"
 ```
 
-Keep all secrets server-side where applicable. Do not commit `.env.local`.
+### Database setup
 
-### Database
+For a new Supabase project, run [`supabase-schema.sql`](./supabase-schema.sql) once in the Supabase SQL Editor.
 
-For a new Supabase project, run [`supabase-schema.sql`](./supabase-schema.sql) once in the Supabase SQL Editor. For an existing project, apply the versioned migrations in [`drizzle/`](./drizzle/) in order. The current migration adds trend provenance fields and ownership policies.
+For an existing project, apply the versioned SQL files in [`drizzle/`](./drizzle/) in order. Do not rerun the initial schema unnecessarily.
 
-In Supabase Authentication URL Configuration, use:
+In Supabase Authentication URL Configuration, add:
 
 ```text
 http://localhost:3000
 http://localhost:3000/**
 ```
 
-### Run
+### Run locally
 
 ```powershell
 npm install
@@ -127,16 +166,61 @@ npm run dev
 
 Open `http://localhost:3000`.
 
-### Validate
+### Deploy
+
+For Render:
+
+```text
+Build command: npm install && npm run build
+Start command: npm start
+```
+
+Configure the same environment variables in Render. After deployment, update Supabase's Site URL and allowed redirect URLs to use the public Render URL.
+
+## 10. Validation and testing
+
+Run TypeScript validation:
 
 ```powershell
 npm run lint
+```
+
+Run the generation checks:
+
+```powershell
 npm run test:generation
+```
+
+Build the production frontend:
+
+```powershell
 npm run build
 ```
 
-## Architecture notes
+The generation tests cover localization, personalization, custom instructions, unsupported claims, profile completeness, approved pillars, trend-evidence handling, plan horizons, date boundaries, validation, and provider-result shapes.
 
-The server loads the authenticated Supabase identity, retrieves the user's brand profile and approved pillars, requests structured JSON from Gemini, validates the response, and only then returns or persists it. Existing approved or manually edited content is not silently overwritten by regeneration.
+## 11. Security notes
 
-The Supabase publishable key is intended for browser use. Never put a Supabase `service_role` key, database password, or Gemini key in client code or source control.
+- Supabase access tokens are verified server-side.
+- Database reads and writes are scoped to the authenticated user.
+- Existing approved or manually edited content is not silently overwritten during regeneration.
+- The Gemini API key stays server-side.
+- `DATABASE_URL` stays server-side.
+- The Supabase publishable/anon key may be used in the browser; a `service_role` key must never be exposed there.
+- `.env.local`, database passwords, API keys, and local database files are excluded from Git.
+- Supabase RLS policies provide defense in depth, while server-side ownership checks remain required for privileged database connections.
+
+## 12. Future development
+
+The next technical and product improvements are:
+
+1. Deploy a stable public version and monitor provider/database failures.
+2. Add verified trend-source ingestion with source relevance and freshness checks.
+3. Implement official Meta/Instagram OAuth and read-only analytics.
+4. Add brand-knowledge retrieval for user-provided documents.
+5. Improve scheduling with explicit timezone-aware publication workflows.
+6. Expand usability testing with creators, educators, and consultants across Arabic-speaking markets.
+
+### What happens next
+
+Over the next three months, we would stabilize the public deployment, add verified trend ingestion, implement official Meta/Instagram analytics, add brand-knowledge retrieval, and test the workflows with creators across Arabic-speaking markets.
