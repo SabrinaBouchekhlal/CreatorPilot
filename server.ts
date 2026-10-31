@@ -86,7 +86,7 @@ function clearGeminiFailure(): void {
   geminiUnavailableKind = null;
 }
 
-function sendGeminiFailure(res: Response, failure: GeminiFailure) {
+function sendGeminiFailure(res: Response, failure: GeminiFailure, detail?: string) {
   const response = {
     success: false,
     code: failure.kind === 'quota_exceeded' ? 'GEMINI_QUOTA_EXCEEDED'
@@ -104,6 +104,7 @@ function sendGeminiFailure(res: Response, failure: GeminiFailure) {
       ? 'Gemini returned content that did not satisfy CreatorPilot validation. No content was generated; please try again.'
       : 'Gemini is temporarily unavailable. No content was generated; please try again later.',
     retryAt: failure.retryAt,
+    ...(detail ? { detail } : {}),
   };
   const status = failure.kind === 'quota_exceeded' || failure.kind === 'rate_limited' ? 429
     : failure.kind === 'invalid_response' ? 502
@@ -847,7 +848,7 @@ Return JSON format:
             console.warn(`Unsupported claim fragments: ${getUnsupportedClaimFragments(parsed).join(', ')}`);
           }
           const failure = classifyGeminiFailure(new InvalidGeminiJsonError());
-          return sendGeminiFailure(res, failure);
+          return sendGeminiFailure(res, failure, problems.slice(0, 5).join('; '));
         }
         clearGeminiFailure();
         return res.json({ success: true, source: GEMINI_MODEL, data: parsed });
